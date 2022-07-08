@@ -1,4 +1,4 @@
-# Prueba tecnica Desarrollador backend java
+# Prueba técnica Desarrollador backend java
 Servicio para capturar datos de posibles candidatos a clientes para Unicomer Jamaica. 
 
 ## Información general:
