@@ -13,5 +13,7 @@ public interface ClientService {
 	public ClientResponse findById(Long id) throws CustomResponseException;
 
 	public ClientResponse save(ClientRequest clientRequest);
+	
+	public ClientResponse update(ClientRequest clientRequest, Long id) throws CustomResponseException;
 
 }

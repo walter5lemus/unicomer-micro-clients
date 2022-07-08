@@ -1,4 +1,4 @@
-package com.unicomer.micro.clients.configuration.exception.models;
+package com.unicomer.micro.clients.configuration;
 
 import org.springframework.http.HttpStatus;
 
@@ -15,9 +15,15 @@ public enum CustomErrorEnum {
 	ERROR_NO_CLIENT(
 			"",
 			"fatal",
-			"No se pudo obtener el cliente solicitado",
+			"Error getting client",
 			"ERROR_NO_CLIENT"
 		),
+	ERROR_UPDATE_CLIENT(
+			"",
+			"fatal",
+			"Error updating client",
+			"ERROR_UPDATE_CLIENT"
+		),	
 	NONE(
 		"",
 		"none",

@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.unicomer.micro.clients.configuration.CustomErrorEnum;
 import com.unicomer.micro.clients.configuration.exception.CustomResponseException;
-import com.unicomer.micro.clients.configuration.exception.models.CustomErrorEnum;
 import com.unicomer.micro.clients.controller.request.ClientRequest;
 import com.unicomer.micro.clients.controller.response.ClientResponse;
 import com.unicomer.micro.clients.repository.ClientRepository;
@@ -55,6 +55,33 @@ public class ClientServiceImplementation implements ClientService {
 	public ClientResponse save(ClientRequest clientRequest) {
 		Client client = clientMapper.convertClientRequestToClient(clientRequest);
 		return clientMapper.convertClientToClientResponse(clientRepository.save(client));
+	}
+
+	@Override
+	public ClientResponse update(ClientRequest clientRequest, Long id) throws CustomResponseException {
+		Optional<Client> currentClient = clientRepository.findById(id);
+		
+		if(currentClient.isPresent()) {
+			
+			Client ClientMapper = clientMapper.convertClientRequestToClient(clientRequest);
+			Client client = currentClient.get();
+			
+			client.setFirstName(ClientMapper.getFirstName());
+			client.setLastName(ClientMapper.getLastName());
+			client.setBirthday(ClientMapper.getBirthday());
+			client.setGender(ClientMapper.getGender());
+			client.setCellPhone(ClientMapper.getCellPhone());
+			client.setHomePhone(ClientMapper.getHomePhone());
+			client.setAddressHome(ClientMapper.getAddressHome());
+			client.setProfession(ClientMapper.getProfession());
+			client.setIncomes(ClientMapper.getIncomes());
+			
+			return clientMapper.convertClientToClientResponse(clientRepository.save(client));
+		}else {
+			throw CustomErrorEnum.ErrorClient(CustomErrorEnum.ERROR_UPDATE_CLIENT, HttpStatus.BAD_REQUEST);
+		}
+		
+		
 	}
 
 }

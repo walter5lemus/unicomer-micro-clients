@@ -31,7 +31,6 @@ public class ClientRequest{
 	private Date birthday;
 	
 	@NotNull(message = "Gender can not be null")
-	@Size(min = 1, max = 1, message = "Gender can not be more than 1 character")
 	private Character gender;
 	
 	@NotNull(message = "Cell phone can not be null")
@@ -51,7 +50,6 @@ public class ClientRequest{
 	private String profession;
 	
 	@NotNull(message = "Incomes can not be null")
-	@Size(min = 0, message = "Incomes can not be zero")
 	private BigDecimal incomes;
 	
 }

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.unicomer.micro.clients.configuration.CustomErrorEnum;
 import com.unicomer.micro.clients.configuration.exception.CustomResponseException;
-import com.unicomer.micro.clients.configuration.exception.models.CustomErrorEnum;
 import com.unicomer.micro.clients.configuration.exception.models.CustomErrorModel;
 import com.unicomer.micro.clients.configuration.exception.models.CustomErrorWrapper;
 
