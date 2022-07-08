@@ -1,0 +1,3 @@
+com\unicomer\micro\clients\repository\entity\Client.class
+com\unicomer\micro\clients\repository\entity\Client$ClientBuilder.class
+com\unicomer\micro\clients\UnicomerMicroClientsApplication.class
