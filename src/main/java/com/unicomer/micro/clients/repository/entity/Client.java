@@ -2,12 +2,15 @@ package com.unicomer.micro.clients.repository.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,7 +22,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Entity
 @Data
 @ToString
@@ -27,23 +32,23 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Table(name = "clients")
-public class Client implements Serializable{
+public class Client implements Serializable {
 
 	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idClient;
-	
+
 	@NotNull
 	@Length(min = 1, max = 50, message = "First name can not be more than 50 characters")
 	private String firstName;
-	
+
 	@NotNull
 	@Length(min = 1, max = 50, message = "Last name can not be more than 50 characters")
 	private String lastName;
 
 	@NotNull
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	private Date birthday;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDateTime birthday;
 
 	@NotNull
 	private Character gender;
@@ -66,8 +71,24 @@ public class Client implements Serializable{
 
 	@NotNull
 	private BigDecimal incomes;
-	
-	
+
+	private LocalDateTime created;
+
+	private LocalDateTime lastModified;
+
+	@PrePersist
+	private void Prepersist() {
+		
+		this.created = LocalDateTime.now();
+		this.lastModified = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	public void preUpdateFunction() {
+		log.info("se actualizó la fecha");
+		this.lastModified = LocalDateTime.now();
+	}
+
 	/**
 	 * 
 	 */

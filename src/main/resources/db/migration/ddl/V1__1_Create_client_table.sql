@@ -8,5 +8,7 @@ CREATE TABLE clients (
 	cell_phone 		VARCHAR ( 20 ) NOT NULL,
 	address_home 	VARCHAR ( 255 ) NOT NULL,
 	profession 		VARCHAR ( 50 ) NOT NULL,
-	incomes			NUMERIC (20, 2) NOT NULL
+	incomes			NUMERIC (20, 2) NOT NULL,
+	created			TIMESTAMP  NOT NULL,
+	last_modified	TIMESTAMP  NOT NULL
 );
