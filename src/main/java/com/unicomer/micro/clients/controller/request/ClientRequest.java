@@ -1,7 +1,7 @@
 package com.unicomer.micro.clients.controller.request;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,8 +33,7 @@ public class ClientRequest{
 	
 	@NotNull(message = "Birthday can not be null")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date birthday;
+	private LocalDateTime birthday;
 	
 	@NotNull(message = "Gender can not be null")
 	private Character gender;

@@ -1,5 +1,6 @@
 package com.unicomer.micro.clients.service.implementation;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,9 +74,15 @@ public class ClientServiceImplementation implements ClientService {
 	}
 
 	@Override
-	public ClientResponse save(ClientRequest clientRequest) {
+	public ClientResponse save(ClientRequest clientRequest) throws CustomResponseException {
 		log.info("Entrando al metodo save en ClientServiceImplementation");
+		
+		if(clientRequest.getBirthday().isAfter(LocalDateTime.now())){
+			throw CustomErrorEnum.ErrorClient(CustomErrorEnum.ERROR_BIRTHDAY, HttpStatus.BAD_REQUEST);
+		}
+		
 		Client client = clientMapper.convertClientRequestToClient(clientRequest);
+		
 
 		log.info("Regresando información correctamente del metodo save en ClientServiceImplementation");
 		return clientMapper.convertClientToClientResponse(clientRepository.save(client));
@@ -85,6 +92,10 @@ public class ClientServiceImplementation implements ClientService {
 	public ClientResponse update(ClientRequest clientRequest, Long id) throws CustomResponseException {
 		Optional<Client> currentClient = clientRepository.findById(id);
 		log.info("Entrando al metodo update en ClientServiceImplementation");
+		
+		if(clientRequest.getBirthday().isAfter(LocalDateTime.now())){
+			throw CustomErrorEnum.ErrorClient(CustomErrorEnum.ERROR_BIRTHDAY, HttpStatus.BAD_REQUEST);
+		}
 
 		if (currentClient.isPresent()) {
 

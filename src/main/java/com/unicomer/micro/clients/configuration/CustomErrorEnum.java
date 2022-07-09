@@ -24,6 +24,12 @@ public enum CustomErrorEnum {
 			"Error updating client",
 			"ERROR_UPDATE_CLIENT"
 		),	
+	ERROR_BIRTHDAY(
+			"",
+			"fatal",
+			"Error birthday is not correct",
+			"ERROR_BIRTHDAY"
+		),	
 	NONE(
 		"",
 		"none",

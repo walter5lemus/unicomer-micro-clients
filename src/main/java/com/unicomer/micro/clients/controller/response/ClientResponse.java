@@ -1,7 +1,7 @@
 package com.unicomer.micro.clients.controller.response;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,7 +28,7 @@ public class ClientResponse {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	private Date birthday;
+	private LocalDateTime birthday;
 	
 	private Character gender;
 	

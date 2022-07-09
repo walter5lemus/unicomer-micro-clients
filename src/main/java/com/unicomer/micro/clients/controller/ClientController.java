@@ -35,8 +35,8 @@ public class ClientController {
 
 	@GetMapping
 	@Operation(summary = "Obtiene todos los clientes", description = "Este método  permite obtener los clientes mediante paginas")
-	public ResponseEntity<?> getAllClient(@RequestParam(name = "Numero de pagina", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "Cantidad de elementos", defaultValue = "2") Integer pageSized) {
+	public ResponseEntity<?> getAllClient(@RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "5") Integer pageSized) {
 		
 		log.info("Entrando al metodo getAll en ClientController");
 		return new ResponseEntity<>(clientService.findAll(pageNo, pageSized), HttpStatus.OK);
@@ -45,7 +45,7 @@ public class ClientController {
 	@GetMapping("/{id}")
 	@Operation(summary = "Permite obtener un cliente", description = "Este método permite obtener un "
 			+ "cliente en específico mediante un identificador")
-	public ResponseEntity<?> getClientById(@PathVariable(name = "Id del cliente") Long id)
+	public ResponseEntity<?> getClientById(@PathVariable Long id)
 			throws CustomResponseException {
 		
 		
@@ -56,7 +56,7 @@ public class ClientController {
 	@PostMapping()
 	@Operation(summary = "Permite guardar un cliente", description = "Este método permite guardar un "
 			+ "cliente en específico")
-	public ResponseEntity<?> saveClient(@Valid @RequestBody ClientRequest clientRequest) {
+	public ResponseEntity<?> saveClient(@Valid @RequestBody ClientRequest clientRequest) throws CustomResponseException {
 		
 		
 		log.info("Entrando al metodo saveClient en ClientController");
@@ -68,7 +68,7 @@ public class ClientController {
 	@Operation(summary = "Permite actualizar un cliente", description = "Este método permite actualizar un "
 			+ "cliente en específico mediante un identificador y los campos a actualizar")
 	public ResponseEntity<?> updateClient(@Valid @RequestBody ClientRequest clientRequest,
-			@PathVariable(name = "Id del cliente") Long id) throws CustomResponseException {
+			@PathVariable Long id) throws CustomResponseException {
 		
 		
 		log.info("Entrando al metodo updateClient en ClientController");
