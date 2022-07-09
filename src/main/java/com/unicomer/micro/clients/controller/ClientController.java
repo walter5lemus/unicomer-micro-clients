@@ -50,7 +50,7 @@ public class ClientController {
 		
 		
 		log.info("Entrando al metodo getClientById en ClientController");
-		return new ResponseEntity<>(clientService.findById(id), HttpStatus.CREATED);
+		return new ResponseEntity<>(clientService.findById(id), HttpStatus.OK);
 	}
 
 	@PostMapping()
