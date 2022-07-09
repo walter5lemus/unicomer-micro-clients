@@ -3,10 +3,15 @@ Servicio para capturar datos de posibles candidatos a clientes para Unicomer Jam
 
 ## Información general:
 El servicio está hecho con:
-- Spring Boot 2.5.6
+- Spring Boot 
 - Java 11
 - Maven
 - H2 como base de datos
+
+## Heroku
+El servicio ha sido expuesto en la nube de Heroku y puede probarse en el siguiente link: 
+
+https://unicomer-micro-clients.herokuapp.com/swagger-ui/index.html#/Clientes 
 
 ## Features
 
@@ -34,5 +39,8 @@ docker run -it -p 8080:8080 --name unicomer-micro-clients unicomer-micro-clients
 ```
 
 ## Swagger
-Este servicio está documentado con swagger.
+En entorno local la documentación con swagger se puede ver con el link :
+
 http://localhost:8080/swagger-ui/index.html#/Clientes
+
+NOTA: El puerto puede cambiar según el que se haya definido.
