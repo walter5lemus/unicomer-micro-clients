@@ -1,30 +1,21 @@
 package com.unicomer.micro.clients.service.implementation;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
-import com.unicomer.micro.clients.configuration.CustomErrorEnum;
-import com.unicomer.micro.clients.configuration.exception.CustomResponseException;
 import com.unicomer.micro.clients.controller.request.ClientRequest;
 import com.unicomer.micro.clients.controller.response.ClientResponse;
 import com.unicomer.micro.clients.repository.ClientRepository;
 import com.unicomer.micro.clients.repository.entity.Client;
 import com.unicomer.micro.clients.service.ClientService;
 import com.unicomer.micro.clients.service.mapper.ClientMapper;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -59,14 +50,13 @@ public class ClientServiceImplementation implements ClientService {
 	}
 
 	@Override
-	public ClientResponse findById(Long id) throws CustomResponseException {
+	public ClientResponse findById(Long id){
 		Optional<Client> client = clientRepository.findById(id);
 		log.info("Entrando al metodo findById en ClientServiceImplementation");
 
 		if (client.isEmpty()) {
 
 			log.error("Error al buscar el cliente id " + id + ", no se encontró en la BD ");
-			throw CustomErrorEnum.ErrorClient(CustomErrorEnum.ERROR_NO_CLIENT, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		log.info("Regresando información correctamente del metodo findById en ClientServiceImplementation");
@@ -74,11 +64,11 @@ public class ClientServiceImplementation implements ClientService {
 	}
 
 	@Override
-	public ClientResponse save(ClientRequest clientRequest) throws CustomResponseException {
+	public ClientResponse save(ClientRequest clientRequest) throws Exception {
 		log.info("Entrando al metodo save en ClientServiceImplementation");
 		
 		if(clientRequest.getBirthday().isAfter(LocalDateTime.now())){
-			throw CustomErrorEnum.ErrorClient(CustomErrorEnum.ERROR_BIRTHDAY, HttpStatus.BAD_REQUEST);
+			throw new Exception();
 		}
 		
 		Client client = clientMapper.convertClientRequestToClient(clientRequest);
@@ -89,12 +79,12 @@ public class ClientServiceImplementation implements ClientService {
 	}
 
 	@Override
-	public ClientResponse update(ClientRequest clientRequest, Long id) throws CustomResponseException {
+	public ClientResponse update(ClientRequest clientRequest, Long id) throws Exception {
 		Optional<Client> currentClient = clientRepository.findById(id);
 		log.info("Entrando al metodo update en ClientServiceImplementation");
 		
 		if(clientRequest.getBirthday().isAfter(LocalDateTime.now())){
-			throw CustomErrorEnum.ErrorClient(CustomErrorEnum.ERROR_BIRTHDAY, HttpStatus.BAD_REQUEST);
+			throw new Exception();
 		}
 
 		if (currentClient.isPresent()) {
@@ -117,7 +107,7 @@ public class ClientServiceImplementation implements ClientService {
 		} else {
 
 			log.error("Error actualizando el cliente id " + id + ", no se encontró en la BD ");
-			throw CustomErrorEnum.ErrorClient(CustomErrorEnum.ERROR_UPDATE_CLIENT, HttpStatus.BAD_REQUEST);
+			throw new Exception();
 		}
 
 	}

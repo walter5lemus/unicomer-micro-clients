@@ -1,15 +1,7 @@
 package com.unicomer.micro.clients.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.unicomer.micro.clients.controller.request.ClientRequest;
+import com.unicomer.micro.clients.controller.response.ClientResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.google.gson.Gson;
-import com.unicomer.micro.clients.configuration.exception.CustomResponseException;
-import com.unicomer.micro.clients.controller.request.ClientRequest;
-import com.unicomer.micro.clients.controller.response.ClientResponse;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class ClientControllerTest {
@@ -30,7 +22,7 @@ public class ClientControllerTest {
 	
 	@Test
 	@DisplayName("Controller get all clients in DB")
-	public void getAllClient() {
+	public void getAllClient() throws Exception {
 		   
 		Integer pageNo = 0;
 		Integer pageSize = 10;
@@ -44,7 +36,7 @@ public class ClientControllerTest {
 	
 	@Test
 	@DisplayName("Controller find client by id in DB")
-	public void findById() throws CustomResponseException {
+	public void findById() throws Exception {
 		 ResponseEntity<?> response = clientController.getClientById(1L);
 		 
 		 assertNotNull(response);
@@ -61,7 +53,7 @@ public class ClientControllerTest {
 	
 	@Test
 	@DisplayName("Controller save client in DB")
-	public void saveClientController() throws CustomResponseException{
+	public void saveClientController() throws Exception{
 		
 		ClientRequest client = ClientRequest.builder()
 			 .firstName("Wendy")
@@ -84,7 +76,7 @@ public class ClientControllerTest {
 	
 	@Test
 	@DisplayName("Controller save client in DB with error in birthday")
-	public void saveClientControllerwithErrorBirthDay() throws CustomResponseException{
+	public void saveClientControllerwithErrorBirthDay() throws Exception{
 		
 		ClientRequest client = ClientRequest.builder()
 			 .firstName("Wendy")
@@ -99,12 +91,12 @@ public class ClientControllerTest {
 			 .build();
 	 
 		
-		assertThrows(CustomResponseException.class, () -> clientController.saveClient(client));
+		assertThrows(Exception.class, () -> clientController.saveClient(client));
 	}
 
 	@Test
 	@DisplayName("Controller update client birthday is in future day in DB")
-	public void updateClientBirhtdayNotCorrect() throws CustomResponseException {
+	public void updateClientBirhtdayNotCorrect() throws Exception {
 	
 		ClientRequest client = ClientRequest.builder()
 				 .firstName("Wendy")
@@ -127,12 +119,12 @@ public class ClientControllerTest {
 		
 		client.setBirthday(LocalDateTime.now().plusMinutes(5));
 		
-		assertThrows(CustomResponseException.class, () -> clientController.updateClient(client, clientResponse.getIdClient()));
+		assertThrows(Exception.class, () -> clientController.updateClient(client, clientResponse.getIdClient()));
 	}
 	
 	@Test
 	@DisplayName("Controller Update client in DB")
-	public void updateClientController() throws CustomResponseException {
+	public void updateClientController() throws Exception {
 	
 		ClientRequest client = ClientRequest.builder()
 				 .firstName("Wendy")

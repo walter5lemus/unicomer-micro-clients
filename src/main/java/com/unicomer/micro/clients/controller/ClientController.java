@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.unicomer.micro.clients.configuration.exception.CustomResponseException;
 import com.unicomer.micro.clients.controller.request.ClientRequest;
 import com.unicomer.micro.clients.service.ClientService;
 
@@ -36,7 +35,7 @@ public class ClientController {
 	@GetMapping
 	@Operation(summary = "Obtiene todos los clientes", description = "Este método  permite obtener los clientes mediante paginas")
 	public ResponseEntity<?> getAllClient(@RequestParam(defaultValue = "0") Integer pageNo,
-			@RequestParam(defaultValue = "5") Integer pageSized) {
+			@RequestParam(defaultValue = "5") Integer pageSized) throws Exception {
 		
 		log.info("Entrando al metodo getAll en ClientController");
 		return new ResponseEntity<>(clientService.findAll(pageNo, pageSized), HttpStatus.OK);
@@ -45,10 +44,8 @@ public class ClientController {
 	@GetMapping("/{id}")
 	@Operation(summary = "Permite obtener un cliente", description = "Este método permite obtener un "
 			+ "cliente en específico mediante un identificador")
-	public ResponseEntity<?> getClientById(@PathVariable Long id)
-			throws CustomResponseException {
-		
-		
+	public ResponseEntity<?> getClientById(@PathVariable Long id) throws Exception {
+
 		log.info("Entrando al metodo getClientById en ClientController");
 		return new ResponseEntity<>(clientService.findById(id), HttpStatus.OK);
 	}
@@ -56,7 +53,7 @@ public class ClientController {
 	@PostMapping()
 	@Operation(summary = "Permite guardar un cliente", description = "Este método permite guardar un "
 			+ "cliente en específico")
-	public ResponseEntity<?> saveClient(@Valid @RequestBody ClientRequest clientRequest) throws CustomResponseException {
+	public ResponseEntity<?> saveClient(@Valid @RequestBody ClientRequest clientRequest) throws Exception {
 		
 		
 		log.info("Entrando al metodo saveClient en ClientController");
@@ -68,7 +65,7 @@ public class ClientController {
 	@Operation(summary = "Permite actualizar un cliente", description = "Este método permite actualizar un "
 			+ "cliente en específico mediante un identificador y los campos a actualizar")
 	public ResponseEntity<?> updateClient(@Valid @RequestBody ClientRequest clientRequest,
-			@PathVariable Long id) throws CustomResponseException {
+			@PathVariable Long id) throws Exception {
 		
 		
 		log.info("Entrando al metodo updateClient en ClientController");

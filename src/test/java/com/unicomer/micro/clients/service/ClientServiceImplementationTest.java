@@ -1,26 +1,18 @@
 package com.unicomer.micro.clients.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
+import com.unicomer.micro.clients.controller.request.ClientRequest;
+import com.unicomer.micro.clients.controller.response.ClientResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.unicomer.micro.clients.configuration.exception.CustomResponseException;
-import com.unicomer.micro.clients.controller.request.ClientRequest;
-import com.unicomer.micro.clients.controller.response.ClientResponse;
-import com.unicomer.micro.clients.repository.entity.Client;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class ClientServiceImplementationTest  {
@@ -30,7 +22,7 @@ public class ClientServiceImplementationTest  {
 	
 	@Test
 	@DisplayName("Service get all clients in DB")
-	public void getAllClient() {
+	public void getAllClient() throws Exception {
 		Map<String, Object> response = new HashMap<>(); 
 		Integer pageNo = 0;
 		Integer pageSize = 10;
@@ -44,7 +36,7 @@ public class ClientServiceImplementationTest  {
 	
 	@Test
 	@DisplayName("Find client by id in DB")
-	public void findById() throws CustomResponseException {
+	public void findById() throws Exception {
 		 ClientResponse client = clientService.findById(1L);
 		 assertNotNull(client);
 		 
@@ -56,7 +48,7 @@ public class ClientServiceImplementationTest  {
 	
 	@Test
 	@DisplayName("save client in DB")
-	public void save() throws CustomResponseException {
+	public void save() throws Exception {
 		ClientRequest client = ClientRequest.builder()
 				 .firstName("Wendy")
 				 .lastName("Martinez")
@@ -81,7 +73,7 @@ public class ClientServiceImplementationTest  {
 	
 	@Test
 	@DisplayName("save client birthday is in future day in DB")
-	public void saveBirhtdayNotCorrect() throws CustomResponseException {
+	public void saveBirhtdayNotCorrect() throws Exception {
 		ClientRequest client = ClientRequest.builder()
 				 .firstName("Wendy")
 				 .lastName("Martinez")
@@ -94,13 +86,13 @@ public class ClientServiceImplementationTest  {
 				 .incomes(new BigDecimal(800.00))
 				 .build();
 		
-			assertThrows(CustomResponseException.class, () -> clientService.save(client));
+			assertThrows(Exception.class, () -> clientService.save(client));
 		  
 	}
 	
 	@Test
 	@DisplayName("Update client birthday is in future day in DB")
-	public void updateClientBirhtdayNotCorrect() throws CustomResponseException {
+	public void updateClientBirhtdayNotCorrect() throws Exception {
 	
 		ClientRequest client = ClientRequest.builder()
 				 .firstName("Wendy")
@@ -118,13 +110,13 @@ public class ClientServiceImplementationTest  {
 		
 		client.setBirthday(LocalDateTime.now().plusMinutes(5));
 		
-		assertThrows(CustomResponseException.class, () -> clientService.update(client, clientResponse.getIdClient()));
+		assertThrows(Exception.class, () -> clientService.update(client, clientResponse.getIdClient()));
 		
 	}
 	
 	@Test
 	@DisplayName("Update client in DB")
-	public void updateClient() throws CustomResponseException {
+	public void updateClient() throws Exception {
 	
 		ClientRequest client = ClientRequest.builder()
 				 .firstName("Wendy")

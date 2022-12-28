@@ -1,19 +1,18 @@
 package com.unicomer.micro.clients.service;
 
-import java.util.Map;
-
-import com.unicomer.micro.clients.configuration.exception.CustomResponseException;
 import com.unicomer.micro.clients.controller.request.ClientRequest;
 import com.unicomer.micro.clients.controller.response.ClientResponse;
 
+import java.util.Map;
+
 public interface ClientService {
 	
-	public Map<String, Object> findAll(Integer pageNo, Integer pageSize);
+	Map<String, Object> findAll(Integer pageNo, Integer pageSize) throws Exception;
 	
-	public ClientResponse findById(Long id) throws CustomResponseException;
+	ClientResponse findById(Long id) throws Exception;
 
-	public ClientResponse save(ClientRequest clientRequest) throws CustomResponseException;
+	ClientResponse save(ClientRequest clientRequest) throws Exception;
 	
-	public ClientResponse update(ClientRequest clientRequest, Long id) throws CustomResponseException;
+	ClientResponse update(ClientRequest clientRequest, Long id) throws Exception;
 
 }
